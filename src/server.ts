@@ -11,7 +11,7 @@ import {
     TransactionInstruction,
 } from "@solana/web3.js";
 import { sha256 } from "js-sha256";
-import { BLOCKCHAIN_IDS } from "@solana/actions";
+import { ACTIONS_CORS_HEADERS, BLOCKCHAIN_IDS } from "@solana/actions";
 
 config();
 
@@ -34,9 +34,7 @@ const VAULT_DATA_SEED = "vault_data";
 
 // Headers required for Blink actions
 const HEADERS = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "OPTIONS, GET, POST",
-    "Access-Control-Allow-Headers": "Content-Type",
+    ...ACTIONS_CORS_HEADERS,
     "x-blockchain-ids": BLOCKCHAIN_IDS.mainnet,
     "x-action-version": "2.4",
 };
