@@ -32,7 +32,7 @@ const VAULT_SEED = "vault";
 const VAULT_DATA_SEED = "vault_data";
 
 // Blockchain ID (CAIP-2 format for Solana)
-const BLOCKCHAIN_ID = "solana:mainnet";
+const BLOCKCHAIN_ID = "solana:mainnet-beta"; // Correct format
 
 // Headers required for Blink actions
 const HEADERS = {
