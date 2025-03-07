@@ -44,9 +44,16 @@ const HEADERS = {
 };
 
 // Required for CORS preflight requests
-app.options("/actions/participate", cors(), (_req: Request, res: Response): void => {
-    res.set(HEADERS).sendStatus(204);
+app.options("/actions/participate", (req, res) => {
+    res.set({
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "OPTIONS, GET, POST",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "x-blockchain-ids": "solana:mainnet-beta",
+        "x-action-version": "2.4",
+    }).status(204).send();
 });
+
 
 // **GET /actions/participate** - Returns metadata for the Blink UI
 app.get("/actions/participate", cors(), (req: Request, res: Response): void => {
