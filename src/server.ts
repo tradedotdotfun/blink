@@ -55,7 +55,7 @@ app.use(express.json());
 app.get("/actions/participate", cors(), (req: Request, res: Response): void => {
     const response = {
         type: "action",
-        icon: `${req.protocol}://${req.get("host")}/action_img.png`,
+        icon: `https://static01.nyt.com/images/2016/09/28/us/17xp-pepethefrog_web1/28xp-pepefrog-superJumbo.jpg`,
         label: "0.1 SOL entrance fee",
         title: "Trade dot fun",
         description: "Join the ultimate trading competition",
