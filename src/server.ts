@@ -11,6 +11,7 @@ import {
     TransactionInstruction,
 } from "@solana/web3.js";
 import { sha256 } from "js-sha256";
+import { BLOCKCHAIN_IDS } from "@solana/actions";
 
 config();
 
@@ -30,15 +31,13 @@ const PROGRAM_ID = new PublicKey("GVh92ct6ouJXFjxx7rvPXGidjWhKJVtnBjTkywhpCuA");
 const VAULT_SEED = "vault";
 const VAULT_DATA_SEED = "vault_data";
 
-// Blockchain ID (CAIP-2 format for Solana)
-const BLOCKCHAIN_ID = "solana:mainnet-beta"; // Correct format
 
 // Headers required for Blink actions
 const HEADERS = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "OPTIONS, GET, POST",
     "Access-Control-Allow-Headers": "Content-Type",
-    "x-blockchain-ids": BLOCKCHAIN_ID,
+    "x-blockchain-ids": BLOCKCHAIN_IDS.mainnet,
     "x-action-version": "2.4",
 };
 
