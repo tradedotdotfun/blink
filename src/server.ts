@@ -11,7 +11,7 @@ import {
     TransactionInstruction,
 } from "@solana/web3.js";
 import { sha256 } from "js-sha256";
-import { ACTIONS_CORS_HEADERS, BLOCKCHAIN_IDS } from "@solana/actions";
+import { ACTIONS_CORS_HEADERS, BLOCKCHAIN_IDS, ActionsJson } from "@solana/actions";
 
 config();
 
@@ -66,6 +66,23 @@ app.get("/actions/participate", cors(), (req: Request, res: Response): void => {
 
     res.set(HEADERS).json(response);
 });
+
+// **GET /actions.json** - Returns the ActionsJson configuration
+app.get("/actions.json", (req: Request, res: Response): void => {
+    const payload: ActionsJson = {
+        rules: [
+            { pathPattern: "/*", apiPath: "/api/actions/*" },
+            { pathPattern: "/api/actions/**", apiPath: "/api/actions/**" },
+        ],
+    };
+    res.set(HEADERS).json(payload);
+});
+
+// **OPTIONS /actions.json** - Handles CORS preflight requests
+app.options("/actions.json", (req: Request, res: Response): void => {
+    res.set(HEADERS).status(204).end();
+});
+
 
 // **POST /actions/participate** - Creates the transaction
 app.post("/actions/participate", cors(), async (req: Request, res: Response): Promise<void> => {
