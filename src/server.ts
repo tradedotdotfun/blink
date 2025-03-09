@@ -11,7 +11,7 @@ import {
     TransactionInstruction,
 } from "@solana/web3.js";
 import { sha256 } from "js-sha256";
-import { ACTIONS_CORS_HEADERS, BLOCKCHAIN_IDS, ActionsJson } from "@solana/actions";
+import { ACTIONS_CORS_HEADERS, BLOCKCHAIN_IDS, ActionsJson, ActionGetResponse, ActionPostResponse } from "@solana/actions";
 
 config();
 
@@ -25,7 +25,7 @@ console.log("SOLANA_RPC_URL", SOLANA_RPC_URL);
 const connection = new Connection(SOLANA_RPC_URL);
 
 // Your Solana program ID (Replace this with your real program ID)
-const PROGRAM_ID = new PublicKey("GVh92ct6ouJXFjxx7rvPXGidjWhKJVtnBjTkywhpCuA");
+const PROGRAM_ID = new PublicKey("CoFf4ZpbTJRoPxdJ64JvMn4pVR1wjhvARc8ed91i9i37");
 
 // Vault PDA (Must match what is used in your Solana program)
 const VAULT_SEED = "vault";
@@ -35,7 +35,7 @@ const VAULT_DATA_SEED = "vault_data";
 // Headers required for Blink actions
 const HEADERS = {
     ...ACTIONS_CORS_HEADERS,
-    "x-blockchain-ids": BLOCKCHAIN_IDS.mainnet,
+    "x-blockchain-ids": BLOCKCHAIN_IDS.devnet,
     "x-action-version": "2.4",
 };
 
@@ -116,7 +116,22 @@ app.post("/actions/participate", cors(), async (req: Request, res: Response): Pr
         console.log("✅ Deposit transaction created:", transaction);
         const serializedTx = Buffer.from(transaction.serialize()).toString("base64");
 
-        res.set(HEADERS).json({ type: "transaction", transaction: serializedTx });
+        res.set(HEADERS).json({
+            type: "transaction",
+            transaction: serializedTx, 
+            links: {
+                next: {
+                    type: "inline",
+                    action: {
+                      type: "completed",
+                      icon: `https://tradedotfun.up.railway.app/blink.gif`,
+                      title: "Visit tradedot.fun to start!",
+                      description: "Successfully participated the league -> https://tradedot.fun ",
+                      label: "Success",
+                    },
+                }
+            },
+        } as ActionPostResponse);
     } catch (error) {
         console.error("❌ Deposit transaction error:", error);
         res.status(500).json({ error: "Internal server error" });
